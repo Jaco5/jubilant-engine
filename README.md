@@ -1,2 +1,1 @@
-# jubilant-engine
-Analyze text.
+Take input text from form or API of some sort, parse text using regex to look for patterns involving particular phonemes as represented by character strings.
