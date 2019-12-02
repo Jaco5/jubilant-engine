@@ -4,7 +4,7 @@ import TextOutput from "./Output";
 export default class Form extends React.Component {
     state = {
         string: "th",
-        inputText: "Hello user. \n\n This text area here is where you input the body of text you would like to parse. The 'Operative String' is the combination and sequence of characters that you want to look for.",
+        inputText: 'Hello user. \n\n This text area here is where you input the body of text you would like to parse. The "Operative String" is the combination and sequence of characters that you want to look for. Here are some ideas: \n "From a literary analysis perspective, this would be extremely helpful in identifying patterns, verb use, tense, etc.. ...For me, I would use this to search "ing" to help me identify potential gerund verbs that dont agree with my tense."\nIf you have an idea of what you might be able to do please email it to me at jacob.artz@protonmail.com\nMore queries will be added as well as persistent storage options, input options, and visualizations with D3.js',
         ocurrences: 0,
         words: [],
         sentences: []
