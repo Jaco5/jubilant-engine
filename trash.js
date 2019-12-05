@@ -20,11 +20,10 @@
 //             regExp = new RegExp('[^.?!]*(?<=[.?!\\s])(?=[\\s.?!])[^.?!]*[.?!]', 'ig')
 //             break
 //         default : break
-//         ;
 //     }
 //     console.log(regExp);
 //     let strArr = this.state.inputText.match(regExp);
-//     this.setState({ sentences: strArr })
+//     this.setState({ sentences: output })
 //     console.log(strArr);
 //     if (strArr !== null) {
 //         let count = strArr.length;
@@ -34,3 +33,5 @@
 //         console.log("Yo, its null.")
 //     }
 // }
+
+// I think it makes sense to wait on implementing this until I have a database set up.
