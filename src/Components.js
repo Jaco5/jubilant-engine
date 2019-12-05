@@ -4,7 +4,7 @@ import TextOutput from "./Output";
 export default class Form extends React.Component {
     state = {
         string: "th",
-        inputText: 'Hello user. \n\n This text area here is where you input the body of text you would like to parse. The "Operative String" is the combination and sequence of characters that you want to look for. Here are some ideas: \n\n "From a literary analysis perspective, this would be extremely helpful in identifying patterns, verb use, tense, etc. For me, I would use this to search "ing" to help me identify potential gerund verbs that dont agree with my tense."\n\nMore queries will be added as well as persistent storage options, input options, and visualizations. Comments or suggestions are welcome.',
+        inputText: 'Hello user. \n\n This text area here is where you input the body of text you would like to parse, you may resize it by draggin the bottom left corner. The "Operative String" is the combination and sequence of characters that you want to look for. Here are some ideas: \n\n "From a literary analysis perspective, this would be extremely helpful in identifying patterns, verb use, tense, etc. For me, I would use this to search "ing" to help me identify potential gerund verbs that dont agree with my tense."\n\nMore queries will be added as well as persistent storage options, input options, and visualizations. Comments or suggestions are welcome.',
         ocurrences: 0,
         words: [],
         sentences: [],
@@ -79,7 +79,7 @@ export default class Form extends React.Component {
             console.log("Yo, its null.")
         };
     };
-    
+
     render() {
         return (
             <div className="main-div">
@@ -90,21 +90,18 @@ export default class Form extends React.Component {
                             value={this.state.inputText}
                             onChange={e => this.setState({ inputText: e.target.value })}
                         />
-                    </div>
-                    <div id="b">
-                        <label htmlFor="msi" className="string-input-label">Operative String: </label>
+                        <label htmlFor="msi" className="string-input-label">Operative String:</label>
                         <input type="text" name="msi" className="string-input"
                             value={this.state.string}
                             onChange={e => this.setState({ string: e.target.value })}
                         />
-                        <label htmlFor="count">Count the occurences of your string within the text.</label>
-                        <button name="count" onClick={this._countString}>Count!</button>
-                        <label htmlFor="words">Find all the words your string is used in, if your string is a word, this will return any longer words that have recently eaten it.</label>
-                        <button name="words" onClick={this._wordsWithString}>Words!</button>
-                        <label htmlFor="sentences">This will return all the sentences that your string occurs in.</label>
-                        <button name="sentences" onClick={this._sentencesWithString}>Sentences!</button>
-                        <label htmlFor="sentences">Count sentences.</label>
-                        <button name="tsentences" onClick={this._totalSentences}>Count sentences.</button>
+                    </div>
+                    <div id="b">
+                        <h4>Methods:</h4>
+                        <button name="count" onClick={this._countString}>Count the occurences of your string within the text.</button>
+                        <button name="words" onClick={this._wordsWithString}>Find all the words your string is used in, if your string is a word, this will return any longer words that have recently eaten it.</button>
+                        <button name="sentences" onClick={this._sentencesWithString}>This will return all the sentences that your string occurs in.</button>
+                        <button name="tsentences" onClick={this._totalSentences}>Count total sentences without regard to Operative String.</button>
                     </div>
 
                 </form>
