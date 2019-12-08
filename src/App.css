@@ -29,6 +29,15 @@ textarea { display:block;}
   height: 1rem;
   margin-left: 2.5%;
 }
+/* .sla {
+  color: blue;
+}
+.slb {
+  color: teal;
+}
+.slc {
+  color: green;
+} */
 
 /* ID */
 #a {
@@ -38,9 +47,7 @@ textarea { display:block;}
 #b {
   width:20%;
 }
-#c {
-  /* justify-content: ; */
-}
+
 
 
 @media only screen and (max-width: 768px ) {
