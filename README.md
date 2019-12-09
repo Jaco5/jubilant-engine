@@ -1,1 +1,1 @@
-Take input text from form or API of some sort, parse text using regex to look for patterns involving particular phonemes as represented by character strings.
+Use a number of automatic RegEx queries on your text. 
