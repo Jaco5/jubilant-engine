@@ -157,7 +157,7 @@ export default class Form extends React.Component {
                         <button className="sla" name="sentencesA" onClick={this._sentencesWithStringA}>This will return all the sentences that your stringA occurs in.</button>
                         <button className="sla" name="sentencesB" onClick={this._sentencesWithStringB}>This will return all the sentences that your stringB occurs in.</button>
                         <button name="tsentences" onClick={this._totalSentences}>Count total sentences without regard to Operative String.</button>
-                        <button className="slc" name="cosentences" onClick={this._checkCoOcurrence}>Return sentences with both strings.</button>
+                        <button className="slc" name="cosentences" onClick={this._checkCoOcurrence}>Return sentences that contain both strings.</button>
                     </div>
 
                 </form>
