@@ -10,14 +10,15 @@ export default class Form extends React.Component {
         inputText: 'Hello user. \n\n This text area here is where you input the body of text you would like to parse, you may resize it by draggin the bottom left corner. The "Operative String" is the combination and sequence of characters that you want to look for. Here are some ideas: \n\n "From a literary analysis perspective, this would be extremely helpful in identifying patterns, verb use, tense, etc. For me, I would use this to search "ing" to help me identify potential gerund verbs that dont agree with my tense."\n\nMore queries will be added as well as persistent storage options, input options, and visualizations. Comments or suggestions are welcome.',
         ocurrences: 0,
         wordCount: 0,
+        totalSentences: 0,
         words: [],
-        sentences: {
+        list: {
             arr1: [],
             arr2: [],
             matches: [],
             matchCount: 0
         },
-        totalSentences: 0
+
 
     };
 
@@ -37,11 +38,30 @@ export default class Form extends React.Component {
             console.log("Yo, its null.")
         };
     };
+    _totalSentences = (event) => {
+        event.preventDefault();
+        let regExp = new RegExp('[^.?!]*(?<=[.?!\\s])(?=[\\s.?!])[^.?!]*[.?!]', 'ig');
+        let strArrA = this.state.inputText.match(regExp);
+        if (strArrA !== null) {
+            let count = strArrA.length;
+            this.setState({ totalSentences: count })
+            console.log(count)
+        } else {
+            console.log("Yo, its null.")
+        };
+    };
     _wordsWithString = (event) => {
         event.preventDefault();
         let regExp = new RegExp("\\b\\w*" + (this._regExpEscape(this.state.stringA)) + "\\w*\\b", "ig");
         let strArr = this.state.inputText.match(regExp);
-        this.setState({ words: strArr })
+        this.setState({
+            list: {
+                arr1: strArr,
+                arr2: [],
+                matches: [],
+                matchCount: 0
+            },
+        })
         console.log(strArr);
         if (strArr !== null) {
             let count = strArr.length;
@@ -56,9 +76,9 @@ export default class Form extends React.Component {
         let regExp = new RegExp('[^.?!]*(?<=[.?!\\s])\\b\\w*' + (this._regExpEscape(this.state.stringA)) + '\\w*\\b(?=[\\s.?!])[^.?!]*[.?!]', 'ig');
         let strArr = this.state.inputText.match(regExp);
         this.setState({
-            sentences: {
+            list: {
                 arr1: strArr,
-                arr2: this.state.sentences.arr2
+                arr2: this.state.list.arr2
             }
         })
         console.log(strArr);
@@ -75,8 +95,8 @@ export default class Form extends React.Component {
         let regExp = new RegExp('[^.?!]*(?<=[.?!\\s])\\b\\w*' + (this._regExpEscape(this.state.stringB)) + '\\w*\\b(?=[\\s.?!])[^.?!]*[.?!]', 'ig');
         let strArr = this.state.inputText.match(regExp);
         this.setState({
-            sentences: {
-                arr1: this.state.sentences.arr1,
+            list: {
+                arr1: this.state.list.arr1,
                 arr2: strArr,
             }
         })
@@ -89,19 +109,8 @@ export default class Form extends React.Component {
             console.log("Yo, its null.")
         };
     };
-    _totalSentences = (event) => {
-        event.preventDefault();
-        let regExp = new RegExp('[^.?!]*(?<=[.?!\\s])(?=[\\s.?!])[^.?!]*[.?!]', 'ig');
-        let strArrA = this.state.inputText.match(regExp);
-        if (strArrA !== null) {
-            let count = strArrA.length;
-            this.setState({ totalSentences: count })
-            console.log(count)
-        } else {
-            console.log("Yo, its null.")
-        };
-    };
-    _checkCoOcurrence = (event) => {
+
+    _coOcurrenceSent = (event) => {
         event.preventDefault();
         let regExp = new RegExp('[^.?!]*(?<=[.?!\\s])\\b\\w*' + (this._regExpEscape(this.state.stringA)) + '\\w*\\b(?=[\\s.?!])[^.?!]*[.?!]', 'ig');
         let strArrA = this.state.inputText.match(regExp);
@@ -116,7 +125,7 @@ export default class Form extends React.Component {
             }
         };
         this.setState({
-            sentences: {
+            list: {
                 arr1: strArrA,
                 arr2: strArrB,
                 matches: matches,
@@ -125,7 +134,76 @@ export default class Form extends React.Component {
         })
         //2 searches, 2 result arrays, check matches in results, push those to a new array, count & print that array
 
-    }
+    };
+    _coOcurrenceWord = (event) => {
+        event.preventDefault();
+        let regExp = new RegExp("\\b\\w*" + (this._regExpEscape(this.state.stringA)) + "\\w*\\b", "ig");
+        let strArrA = this.state.inputText.match(regExp);
+        regExp = new RegExp("\\b\\w*" + (this._regExpEscape(this.state.stringB)) + "\\w*\\b", "ig");
+        let strArrB = this.state.inputText.match(regExp);
+        let matches = [];
+        for (let i = 0; i < strArrA.length; i++) {
+            for (let j = 0; j < strArrB.length; j++) {
+                if (strArrA[i] === strArrB[j]) {
+                    matches.push(strArrA[i]);
+                }
+            }
+        };
+        this.setState({
+            list: {
+                arr1: strArrA,
+                arr2: strArrB,
+                matches: matches,
+                matchCount: (function (matches) { return matches.length })
+            }
+        })
+    };
+    //2 searches, 2 result arrays, check matches in results, push those to a new array, count & print that array
+
+    _clear = (event) => {
+        event.preventDefault();
+        this.setState({
+
+            stringA: "",
+            stringB: "",
+
+            inputText: this.state.inputText,
+            ocurrences: 0,
+            wordCount: 0,
+            totalSentences: 0,
+            words: [],
+            list: {
+                arr1: [],
+                arr2: [],
+                matches: [],
+                matchCount: 0
+            }
+
+
+        })
+    };
+    _clearAll = (event) => {
+        event.preventDefault();
+        this.setState({
+
+            stringA: "",
+            stringB: "",
+
+            inputText: "",
+            ocurrences: 0,
+            wordCount: 0,
+            totalSentences: 0,
+            words: [],
+            list: {
+                arr1: [],
+                arr2: [],
+                matches: [],
+                matchCount: 0
+            }
+
+
+        })
+    };
 
     render() {
         return (
@@ -154,10 +232,13 @@ export default class Form extends React.Component {
                         <h5>Methods:</h5>
                         <button name="count" onClick={this._countString}>Count the occurences of your string within the text.</button>
                         <button name="words" onClick={this._wordsWithString}>Find all the character groups your string is in, if your string is a full word, this will return any longer words that have recently eaten it.</button>
-                        <button className="sla" name="sentencesA" onClick={this._sentencesWithStringA}>This will return all the sentences that your stringA occurs in.</button>
-                        <button className="sla" name="sentencesB" onClick={this._sentencesWithStringB}>This will return all the sentences that your stringB occurs in.</button>
+                        <button name="sentencesA" onClick={this._sentencesWithStringA}>This will return all the sentences that your stringA occurs in.</button>
+                        <button name="sentencesB" onClick={this._sentencesWithStringB}>This will return all the sentences that your stringB occurs in.</button>
                         <button name="tsentences" onClick={this._totalSentences}>Count total sentences without regard to Operative String.</button>
-                        <button className="slc" name="cosentences" onClick={this._checkCoOcurrence}>Return sentences that contain both strings.</button>
+                        <button name="cosentences" onClick={this._coOcurrenceSent}>Return sentences that contain both strings.</button>
+                        <button name="coword" onClick={this._coOcurrenceWord}>Return words that contain both strings.</button>
+                        <button name="clear" onClick={this._clear}>Clear Lists, leave text.</button>
+                        <button name="clear" onClick={this._clearAll}>Clear all.</button>
                     </div>
 
                 </form>
